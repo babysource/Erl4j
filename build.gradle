@@ -1,0 +1,35 @@
+apply plugin: 'java'
+
+group 'org.babysource.erl4j'
+
+version '1.0.0'
+
+repositories {
+    maven { url 'http://maven.oschina.net/content/groups/public/' }
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile 'org.slf4j:slf4j-api:1.7.18'
+    compile 'org.apache.logging.log4j:log4j-api:2.5'
+    compile 'org.apache.logging.log4j:log4j-core:2.5'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.5'
+}
+
+jar {
+    manifest.attributes (
+            'Implementation-Title': project.name,
+            'Implementation-Version': version,
+            'Implementation-Vendor': 'Wythe',
+            'Implementation-Vendor-Id': 'Wythe'
+    )
+}
+
+tasks.withType(AbstractCompile) {
+    options.encoding = "UTF-8"
+}
+
+task createProject << {
+    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs()}
+}
